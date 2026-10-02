@@ -140,6 +140,14 @@ footer{text-align:center;font-size:.8rem;color:#8e879a;padding:0 1rem 2rem}
  .overall-card{padding:1.2rem 1rem}
 }
 
+
+.bank-card{margin-top:1.4rem;margin-bottom:1.8rem;padding:1.4rem 1.5rem;border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.035));border:1px solid rgba(215,138,169,.3);box-shadow:0 16px 44px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.bank-card h3{margin:0 0 .25rem;color:#fff;font-size:1.05rem}.bank-sub{color:var(--ink-soft);font-size:.82rem;margin-bottom:1rem}
+.bank-row{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.85rem 0;border-top:1px solid rgba(255,255,255,.1)}
+.bank-info{min-width:0}.bank-label{display:block;color:#bcb5c7;font-size:.78rem}.bank-value{display:block;color:#fff;font-weight:700;direction:ltr;text-align:right;overflow-wrap:anywhere;font-size:.92rem;letter-spacing:.02em}
+.copy-btn{flex:0 0 auto;border:1px solid rgba(215,138,169,.35);border-radius:11px;padding:.55rem .8rem;color:#ffe2ef;background:rgba(215,138,169,.13);font:600 .78rem 'Vazirmatn',sans-serif;cursor:pointer;transition:.2s}
+.copy-btn:hover{background:rgba(215,138,169,.25);transform:translateY(-1px)}.copy-btn.copied{color:#d9f7df;border-color:rgba(120,220,150,.4);background:rgba(70,170,100,.15)}
+
 </style>
 </head>
 <body>
@@ -167,6 +175,19 @@ footer{text-align:center;font-size:.8rem;color:#8e879a;padding:0 1rem 2rem}
     </div>
     <div class="pc-total">از مجموع <b>۱۶,۵۰۰,۰۰۰ تومان</b> کل پروژه</div>
   </div>
+
+  <section class="bank-card" aria-label="اطلاعات پرداخت">
+    <h3>اطلاعات واریز</h3>
+    <div class="bank-sub">به نام امیر محمد سالارپور · بلو بانک</div>
+    <div class="bank-row">
+      <div class="bank-info"><span class="bank-label">شماره کارت</span><span class="bank-value">6219861480492759</span></div>
+      <button class="copy-btn" type="button" data-copy="6219861480492759">کپی شماره کارت</button>
+    </div>
+    <div class="bank-row">
+      <div class="bank-info"><span class="bank-label">شماره شبا</span><span class="bank-value">IR050560611828007751150602</span></div>
+      <button class="copy-btn" type="button" data-copy="IR050560611828007751150602">کپی شبا</button>
+    </div>
+  </section>
 
   <div class="phases">
 
@@ -226,11 +247,27 @@ footer{text-align:center;font-size:.8rem;color:#8e879a;padding:0 1rem 2rem}
 
   </div>
 
+
+
+
 </div>
 
-<footer>لودو استودیو — پیشنهاد قیمت برای آقای صفاری</footer>
+<footer>سالارپور</footer>
 
 <script>
+
+document.querySelectorAll('[data-copy]').forEach(function(button){
+  button.addEventListener('click',async function(){
+    var value=button.getAttribute('data-copy');
+    try{
+      if(navigator.clipboard && window.isSecureContext){await navigator.clipboard.writeText(value);}
+      else{var input=document.createElement('textarea');input.value=value;input.style.position='fixed';input.style.opacity='0';document.body.appendChild(input);input.select();document.execCommand('copy');input.remove();}
+      var old=button.textContent;button.textContent='کپی شد ✓';button.classList.add('copied');
+      setTimeout(function(){button.textContent=old;button.classList.remove('copied')},1600);
+    }catch(e){button.textContent='کپی نشد';setTimeout(function(){button.textContent='کپی'},1600)}
+  });
+});
+
 document.querySelectorAll('[data-item]').forEach(function(item){
   var toggle = item.querySelector('[data-toggle]');
   var panel = item.querySelector('[data-panel]');
